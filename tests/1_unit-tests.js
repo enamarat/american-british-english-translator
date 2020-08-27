@@ -12,7 +12,8 @@ const assert = chai.assert;
 const { JSDOM } = require('jsdom');
 let Translator;
 
-suite('Unit Tests', () => {
+suite('Unit Tests', function() {
+   this.timeout(0);
   suiteSetup(() => {
     // Mock the DOM for testing and load Translator
     return JSDOM.fromFile('./views/index.html')
@@ -24,78 +25,79 @@ suite('Unit Tests', () => {
       });
   });
 
-  suite('Function ____()', () => {
+  suite('Function translateText()', () => {
 
     suite('American to British English', () => {
 
       test('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
         const input = 'Mangoes are my favorite fruit.';
         const output = 'Mangoes are my favourite fruit.';
-
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
       test('I ate yogurt for breakfast. --> I ate yoghurt for breakfast.', done => {
         const input = 'I ate yogurt for breakfast.';
         const output = 'I ate yoghurt for breakfast.';
-
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
       test("We had a party at my friend's condo. --> We had a party at my friend's flat.", done => {
         const input = "We had a party at my friend's condo.";
         const output = "We had a party at my friend's flat.";
-
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
       test('Can you toss this in the trashcan for me? --> Can you toss this in the bin for me?', done => {
         const input = 'Can you toss this in the trashcan for me?';
         const output = 'Can you toss this in the bin for me?';
-
-        // done();
+        //
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
       test('The parking lot was full. --> The car park was full.', done => {
         const input = 'The parking lot was full.';
         const output = 'The car park was full.';
-
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
       test('Like a high tech Rube Goldberg machine. --> Like a high tech Heath Robinson device.', done => {
         const input = 'Like a high tech Rube Goldberg machine.';
         const output = 'Like a high tech Heath Robinson device.';
-
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
       
       test('To play hooky means to skip class or work. --> To bunk off means to skip class or work.', done => {
         const input = 'To play hooky means to skip class or work.';
         const output = 'To bunk off means to skip class or work.';
-
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
       test('No Mr. Bond, I expect you to die. --> No Mr Bond, I expect you to die. ', done => {
         const input = 'No Mr. Bond, I expect you to die.';
         const output = 'No Mr Bond, I expect you to die.';
-
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
       test('Dr. Grosh will see you now. --> Dr Grosh will see you now. ', done => {
         const input = 'Dr. Grosh will see you now.';
         const output = 'Dr Grosh will see you now.';
-
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
       test('Lunch is at 12:15 today. --> Lunch is at 12.15 today.', done => {
         const input = 'Lunch is at 12:15 today.';
         const output = 'Lunch is at 12.15 today.';
-        
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
     });
@@ -105,8 +107,8 @@ suite('Unit Tests', () => {
       test('We watched the footie match for a while. --> We watched the soccer match for a while.', done => {
         const input = 'We watched the footie match for a while.';
         const output = 'We watched the soccer match for a while.';
-
-        // done();
+        assert.equal(Translator.translateText(input), output);
+        done();
       });
 
       test('Paracetamol takes up to an hour to work. --> Tylenol takes up to an hour to work.', done => {
