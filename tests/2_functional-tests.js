@@ -17,15 +17,18 @@ suite('Functional Tests', () => {
     Translator = require('../public/translator.js');
   });
 
-  suite('Function ____()', () => {
+  suite('Function translateText()', () => {
     /* 
       The translated sentence is appended to the `translated-sentence` `div`
       and the translated words or terms are wrapped in 
       `<span class="highlight">...</span>` tags when the "Translate" button is pressed.
     */
     test("Translation appended to the `translated-sentence` `div`", done => {
-
-      // done();
+      const input = 'Mangoes are my favorite fruit.';
+      const output = 'Mangoes are my favourite fruit.';
+      Translator.translateText('Mangoes are my favorite fruit.', 'american-to-british');
+      assert.equal(document.getElementById('translated-sentence').textContent, output);
+      done();
     });
 
     /* 
@@ -34,8 +37,11 @@ suite('Functional Tests', () => {
       `translated-sentence` `div` when the "Translate" button is pressed.
     */
     test("'Everything looks good to me!' message appended to the `translated-sentence` `div`", done => {
-
-      // done();
+      const input = 'Mangoes are my favorite fruit.';
+      const output = 'Everything looks good to me!';
+      Translator.translateText('Mangoes are my favorite fruit.', 'british-to-american');
+      assert.equal(document.getElementById('translated-sentence').textContent, output);
+      done();
     });
 
     /* 
@@ -43,21 +49,25 @@ suite('Functional Tests', () => {
       pressed, append the message 'Error: No text to translate.' to 
       the `error-msg` `div`.
     */
-    test("'Error: No text to translate.' message appended to the `translated-sentence` `div`", done => {
-
-      // done();
+    test("'Error: No text to translate.' message appended to the `error-msg` `div`", done => {
+      const output = 'Error: No text to translate.';
+      Translator.translateText("");
+      assert.equal(document.getElementById('error-msg').textContent, output);
+      done();
     });
 
   });
 
-  suite('Function ____()', () => {
+  suite('Function clearTextArea()', () => {
     /* 
       The text area and both the `translated-sentence` and `error-msg`
       `divs` are cleared when the "Clear" button is pressed.
     */
     test("Text area, `translated-sentence`, and `error-msg` are cleared", done => {
-
-      // done();
+      Translator.clearTextArea();
+      assert.equal(document.getElementById('translated-sentence').textContent, "");
+      assert.equal(document.getElementById('error-msg').textContent, "");
+      done();
     });
 
   });

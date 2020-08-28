@@ -10,7 +10,7 @@ const selectedOption = document.getElementById('locale-select');
 
 /*** functions ***/
 ///////////////////
-const translateText = (input) => {
+const translateText = (input, languageToTranslateFrom) => {
   /**asses input's length**/
   errorDiv.textContent = "";
   if (input.length === 0) {
@@ -22,6 +22,10 @@ const translateText = (input) => {
   let output = "";
   let inputToModify = input;
   let wordToSubstituteDetected = false;
+  
+  if (languageToTranslateFrom) {
+    selectedOption.value = languageToTranslateFrom;
+  }
 
    ////////////////////////////////////////////////////
    //translate from American to British
@@ -60,7 +64,7 @@ const translateText = (input) => {
     }
     
     // time
-    const regexAmericanTime = /\d{2}:\d{2}/g;
+    const regexAmericanTime = /\d{1,2}:\d{2}/g;
     if (regexAmericanTime.test(inputToModify) === true) {
       const americanTimeStamps = inputToModify.match(regexAmericanTime);
       const britishTimeStamps = [];
@@ -91,13 +95,13 @@ const translateText = (input) => {
         inputToModify = output;
       }
     }
-    
+     
      for (let property in britishOnly) {
       let britishWord = property;
-      let regex = new RegExp("\\b" + britishWord + "\\b","gi");
+      let regex = new RegExp("(?:^|[^-\w])" + britishWord + "\\b(?!-)","gi");
       if (regex.test(inputToModify) === true) {
         wordToSubstituteDetected = true;
-        output = inputToModify.replace(regex, `<span class='highlight'>${britishOnly[property]}</span>`);
+        output = inputToModify.replace(inputToModify.match(regex).toString().trim(), `<span class='highlight'>${britishOnly[property]}</span>`);
         inputToModify = output;
       }
     }
@@ -108,13 +112,13 @@ const translateText = (input) => {
       let regex = new RegExp("\\b" + britishWord + "\\b","gi");
       if (regex.test(inputToModify) === true) {
         wordToSubstituteDetected = true;
-        output = inputToModify.replace(regex, `<span class='highlight'>${property}</span>`);
+        output = inputToModify.replace(regex, `<span class='highlight'>${property[0].toUpperCase() + property.substring(1)}</span>`);
         inputToModify = output;
       }
     }
     
     // time
-    const regexAmericanTime = /\d{2}.\d{2}/g;
+    const regexAmericanTime = /\d{1,2}.\d{2}/g;
     if (regexAmericanTime.test(inputToModify) === true) {
       const americanTimeStamps = inputToModify.match(regexAmericanTime);
       const britishTimeStamps = [];
@@ -163,6 +167,7 @@ document.getElementById('clear-btn').addEventListener('click', () => {
 */
 try {
   module.exports = {
-    translateText
+    translateText,
+    clearTextArea
   }
 } catch (e) {}
